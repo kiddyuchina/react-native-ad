@@ -14,6 +14,8 @@ import com.facebook.react.bridge.ReactContext;
 import com.qq.e.comm.managers.GDTADManager;
 import java.util.concurrent.ArrayBlockingQueue;
 
+import com.qq.e.ads.rewardvideo.RewardVideoAD;
+
 /**
  * 管理广告模块的核心对象
  */
@@ -40,6 +42,9 @@ public class AdBoss {
   public static TTNativeExpressAd feedAd;
   public static TTNativeExpressAd drawfeedAd;
   public static TTSplashAd splashAd;
+
+
+  public static RewardVideoAD txRewardAd;
 
   // 存激励视频，全屏视频的回调
   public static Promise rewardPromise;
@@ -74,6 +79,16 @@ public class AdBoss {
     rewardPromise = promise;
     resetRewardResult();
     initSdk(context, appId);
+  }
+
+  public static void prepareRewardTx(
+    Promise promise,
+    Context context,
+    String appId
+  ) {
+    rewardPromise = promise;
+    resetRewardResult();
+    initTx(context, appId);
   }
 
   /**

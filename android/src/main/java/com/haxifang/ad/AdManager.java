@@ -41,55 +41,55 @@ public class AdManager extends ReactContextBaseJavaModule {
         AdBoss.tt_appid =
                 options.hasKey("appid") ? options.getString("appid") : AdBoss.tt_appid;
 
-        runOnUiThread(
-                () -> {
-                    AdBoss.initSdk(reactAppContext, AdBoss.tt_appid);
+        // runOnUiThread(
+        //         () -> {
+        //             AdBoss.initSdk(reactAppContext, AdBoss.tt_appid);
 
-                    // Bin：这里预加载穿山甲广告逻辑需要放在 sdk init 逻辑之后
+        //             // Bin：这里预加载穿山甲广告逻辑需要放在 sdk init 逻辑之后
 
-                    if (options.hasKey("codeid_splash")) {
-                        AdBoss.codeid_splash = options.getString("codeid_splash");
-                        SplashActivity.loadSplashAd(AdBoss.codeid_splash, () -> {
-                            // 开屏广告预加载成功
-                            Log.d(TAG, "开屏预加载成功 codeid_splash " + AdBoss.codeid_splash);
-                        }, () -> {
+        //             if (options.hasKey("codeid_splash")) {
+        //                 AdBoss.codeid_splash = options.getString("codeid_splash");
+        //                 SplashActivity.loadSplashAd(AdBoss.codeid_splash, () -> {
+        //                     // 开屏广告预加载成功
+        //                     Log.d(TAG, "开屏预加载成功 codeid_splash " + AdBoss.codeid_splash);
+        //                 }, () -> {
 
-                        });
-                    }
+        //                 });
+        //             }
 
-                    if (options.hasKey("codeid_full_video")) {
-                        AdBoss.codeid_full_video = options.getString("codeid_full_video");
-                        AdBoss.full_video_orientation =
-                                options.getString("full_video_orientation");
-                        //提前加载
-                        FullScreenActivity.loadAd(
-                                AdBoss.codeid_full_video,
-                                AdBoss.full_video_orientation,
-                                () -> {
-                                    Log.d(
-                                            TAG,
-                                            "提前加载 成功 codeid_full_video " + AdBoss.codeid_full_video
-                                    );
-                                }
-                        );
-                    }
+        //             if (options.hasKey("codeid_full_video")) {
+        //                 AdBoss.codeid_full_video = options.getString("codeid_full_video");
+        //                 AdBoss.full_video_orientation =
+        //                         options.getString("full_video_orientation");
+        //                 //提前加载
+        //                 FullScreenActivity.loadAd(
+        //                         AdBoss.codeid_full_video,
+        //                         AdBoss.full_video_orientation,
+        //                         () -> {
+        //                             Log.d(
+        //                                     TAG,
+        //                                     "提前加载 成功 codeid_full_video " + AdBoss.codeid_full_video
+        //                             );
+        //                         }
+        //                 );
+        //             }
 
-                    if (options.hasKey("codeid_reward_video")) {
-                        AdBoss.codeid_reward_video = options.getString("codeid_reward_video");
-                        //提前加载
-                        RewardActivity.loadAd(
-                                AdBoss.codeid_reward_video,
-                                () -> {
-                                    Log.d(
-                                            TAG,
-                                            "提前加载 成功 codeid_reward_video " +
-                                                    AdBoss.codeid_reward_video
-                                    );
-                                }
-                        );
-                    }
-                }
-        );
+        //             if (options.hasKey("codeid_reward_video")) {
+        //                 AdBoss.codeid_reward_video = options.getString("codeid_reward_video");
+        //                 //提前加载
+        //                 RewardActivity.loadAd(
+        //                         AdBoss.codeid_reward_video,
+        //                         () -> {
+        //                             Log.d(
+        //                                     TAG,
+        //                                     "提前加载 成功 codeid_reward_video " +
+        //                                             AdBoss.codeid_reward_video
+        //                             );
+        //                         }
+        //                 );
+        //             }
+        //         }
+        // );
 
         //支持传参头条需要的userId和appName ...
         if (options.hasKey("uid")) {

@@ -14,6 +14,8 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
+import com.facebook.react.bridge.UiThreadUtil;
+
 import com.haxifang.ad.activities.RewardActivity;
 import com.haxifang.ad.utils.TToast;
 
@@ -40,13 +42,21 @@ public class RewardVideo extends ReactContextBaseJavaModule {
         //拿到参数
         String appId = options.getString("appid"); //可空
         String codeId = options.getString("codeid");
+        String provider = options.hasKey("provider") ? options.getString("provider") : "头条";
         Log.d(TAG, "startAd:  appId: " + appId + ", codeId: " + codeId);
 
-        //准备激励回调
-        AdBoss.prepareReward(promise, mContext, appId);
+        if (provider.equals("腾讯")) {
+			// SDK 初始化
+        	AdBoss.prepareRewardTx(promise, mContext, appId);
+			startTx(codeId);
+			return;
+		}
 
-        // 启动激励视频页面
-        startTT(codeId);
+        //准备激励回调
+        // AdBoss.prepareReward(promise, mContext, appId);
+
+        // // 启动激励视频页面
+        // startTT(codeId);
     }
 
 
@@ -80,12 +90,14 @@ public class RewardVideo extends ReactContextBaseJavaModule {
         Log.d(TAG, message + "AppID：" + appId + "  codeID: " + codeId);
         Activity ac = mContext.getCurrentActivity();
         if (ac != null) {
-            ac.runOnUiThread(() -> {
-                TToast.show(mContext, message);
-                Intent intent = new Intent(mContext, com.haxifang.ad.activities.RewardActivity.class);
+            UiThreadUtil.runOnUiThread(() -> {
+                // TToast.show(mContext, message);
+                Intent intent = new Intent(mContext, com.haxifang.ad.activities.tencent.RewardActivity.class);
                 intent.putExtra("appid", appId);
                 intent.putExtra("codeid", codeId);
                 ac.startActivity(intent);
+                // ac.overridePendingTransition(0, 0);
+                // ac.startActivityForResult(intent, 10000);
             });
         }
     }
